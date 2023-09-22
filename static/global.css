@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* fonts */
+  --font-orbitron: Orbitron;
+  --font-sarpanch: Sarpanch;
+  --font-bebas-neue: "Bebas Neue";
+  --font-poppins: Poppins;
+
+  /* font sizes */
+  --font-size-3xl: 22px;
+  --font-size-31xl: 50px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+
+  /* Colors */
+  --gray-3: #828282;
+  --color: #fff;
+}

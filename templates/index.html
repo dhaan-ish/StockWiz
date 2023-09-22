@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas Neue:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sarpanch:wght@400;500;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+    />
+    <style>
+      .popupcontainer{
+            width: 908px;
+            height: 716px;
+            background-image: url("public\Frame 179.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            display: none;
+            transform: translate(-50%, -50%);
+            backdrop-filter: blur(10px);
+        }
+
+        .googl-stock-prediction{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-shrink: 0;
+            font-family: Orbitron;
+            font-size: 50px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+            color: #FFF;
+            font-family: Orbitron;
+            font-size: 50px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .googl{
+            background: linear-gradient(96deg, #9173D1 0%, #EC6EAD 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .maincon{
+            margin-top: 15px;
+            display: flex;
+            flex-direction: row;
+            gap: 77px;
+        }
+        .maincon1{
+            margin-left: 146px;
+            display: flex;
+            flex-direction: column;
+            gap : 59px;
+            color: var(--1, #FFF);
+            text-align: right;
+            font-family: Sarpanch;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 800;
+            line-height: normal;
+            width: 273px;
+        }
+
+        .maincon2{
+            display: flex;
+            flex-direction: column;
+            gap: 59px;
+            width: 134px;
+            color: var(--1, #FFF);
+            font-family: Sarpanch;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    </style>
+     <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('predictButton').addEventListener('click', async () => {
+              document.getElementById('popupcontainer').style.display = "block";
+              const opening = document.getElementById('opening').value;
+              const low = document.getElementById('low').value;
+              const high = document.getElementById('high').value;
+              const volume = document.getElementById('volume').value;
+              
+              document.getElementById('pophigh').textContent = `${high}`;
+              document.getElementById('poplow').textContent = ` ${low}`;
+              document.getElementById('popvolume').textContent = `${volume}`;
+              document.getElementById('popopening').textContent = `${opening}`;
+  
+              const input_data = `${opening},${low},${high},${volume}`;
+  
+              const response = await fetch('/predict', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ input_data: input_data })
+              });
+  
+              const result = await response.json();
+              const resulter = document.getElementById('popclose');
+              if (result.prediction > opening){
+                resulter.style.color = "green";
+              }else{
+                resulter.style.color = "red";
+              }
+              document.getElementById('popclose').textContent = `${result.prediction}`;
+              document.getElementById("se").addEventListener("click", function(){
+                document.getElementById('popupcontainer').style.display = "none";
+              })
+          });
+      });
+  </script>
+  
+  </head>
+
+  <body>
+    <div id="se">
+    <div class="mun">
+    <div class="mask-group-parent">
+      <img class="mask-group-icon" alt="" src="{{ url_for('static', filename='public/mask-group@2x.png') }}" />
+
+      <img class="mask-group-icon1" alt="" src="{{ url_for('static', filename='public/mask-group1@2x.png') }}" />
+
+      <div class="frame-child"></div>
+      <div class="frame-item"></div>
+      <div class="frame-inner"></div>
+      <b class="predict-googl-stock-container">
+        <span class="predict-googl-stock-container1">
+          <span>predict </span>
+          <span class="googl">googl</span>
+          <span> stock price</span>
+        </span>
+      </b>
+      
+      <div class="group-wrapper">
+        <div class="textnavbar-menu-parent">
+          <div class="textnavbar-menu">
+            <div class="navbar-menu" id="home">Home</div>
+          </div>
+          <div class="textnavbar-menu1">
+            <div class="navbar-menu1" id="predict">Predict</div>
+          </div>
+          <div class="textnavbar-menu2">
+            <div class="navbar-menu2" id="approach" >Approach</div>
+          </div>
+          <div class="textnavbar-menu3">
+            <div class="navbar-menu" id="about">About</div>
+          </div>
+        </div>
+      </div>
+      <div class="vector-group">
+        <img class="rectangle-icon" alt="" src="{{ url_for('static', filename='public/rectangle-49.svg') }}" />
+
+        <div class="predict1" id="predictbtn">Predict</div>
+      </div>
+      <div class="frame-div"></div>
+      <img
+        class="image-removebg-preview-1-icon"
+        alt=""
+        src="{{ url_for('static', filename='public/imageremovebgpreview-1@2x.png') }}"
+      />
+
+      <div class="rectangle-div"></div>
+      <div class="group-parent">
+        <div class="frame-wrapper">
+          <div class="frame-wrapper">
+            <div class="high">HIGH</div>
+            <div class="low">LOW</div>
+            <div class="volume">VOLUME</div>
+            <div class="opening">OPENING</div>
+              <div class="vector-container">
+                  <img class="group-item" alt="" src="{{ url_for('static', filename='public/rectangle-51.svg') }}" />
+                  <input class="enter-hight-value2" type="text" placeholder="Enter The Opening Value" id="opening" required />
+              </div>
+              <div class="group-div">
+                  <img class="group-item" alt="" src="{{ url_for('static', filename='public/rectangle-51.svg') }}" />
+                  <input class="enter-hight-value2" type="text" placeholder="Enter The Volume" id="volume" required />
+              </div>
+              <img class="frame-child1" alt="" src="{{ url_for('static', filename='public/rectangle-51.svg') }}" />
+              <input class="enter-hight-value2" type="text" style="margin-left: 865px; margin-top: 75px;" placeholder="Enter The Low Value" id="low" required />
+              <div class="vector-parent1">
+                  <img class="group-item" alt="" src="{{ url_for('static', filename='public/rectangle-51.svg') }}" />
+                  <input class="enter-hight-value2" type="text" placeholder="Enter The High Value" id="high" required />
+              </div>
+              <div class="vector-parent" style="margin-top: -600px; margin-left: -200px;">
+                <img class="group-child" alt="" src="{{ url_for('static', filename='public/rectangle-40.svg') }}" />
+                <button class="predict" id="predictButton" style="color: #22184C; font-family: 'Bebas Neue', sans-serif; font-size: 32px; font-style: normal; font-weight: 400; line-height: normal; background-color: #9173D1; border: none;">Predict</button>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="popupcontainer" id="popupcontainer">
+    <div class="googl-stock-prediction">
+        <span class="googl">googl</span>
+        <span> stock prediction</span>
+    </div>
+    <div class="maincon">
+        <div class="maincon1">
+            <div>HIGH</div>
+            <div>LOW</div>
+            <div>VOLUME</div>
+            <div>OPENING</div>
+            <div>CLOSING VALUE</div>
+        </div>
+        <div class="maincon2">
+          <div id="pophigh"></div>
+          <div id="poplow"></div>
+          <div id="popvolume"></div>
+          <div id="popopening"></div>
+          <div id="popclose"></div>
+      </div>
+      
+    </div>
+</div>
+    <script>
+        
+        
+        
+        async function predict() {
+            const opening = document.getElementById('opening').value;
+            const low = document.getElementById('low').value;
+            const high = document.getElementById('high').value;
+            const volume = document.getElementById('volume').value;
+            
+            const input_data = `${opening},${low},${high},${volume}`;
+            
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input_data: input_data })
+            });
+            
+            const result = await response.json();
+            
+            document.getElementById('pophigh').textContent = `High: ${high}`;
+            document.getElementById('poplow').textContent = `Low: ${low}`;
+            document.getElementById('popvolume').textContent = `Volume: ${volume}`;
+            document.getElementById('popopening').textContent = `Opening: ${opening}`;
+            document.getElementById('popclose').textContent = `Predicted Close: ${result.prediction}`;
+        }
+    </script>
+    <script>
+      // Add an event listener to each element to change color on hover and mouseout
+      function changeColorOnHover(element) {
+        element.addEventListener("mouseover", function (e) {
+          this.style.color = "#9173d1";
+        });
+  
+        element.addEventListener("mouseout", function (e) {
+          this.style.color = "#FFFFFF";
+        });
+      }
+
+      function changeColorOnHover1(element) {
+        element.addEventListener("mouseover", function (e) {
+          this.style.color = "black";
+        });
+  
+        element.addEventListener("mouseout", function (e) {
+          this.style.color = "#FFFFFF";
+        });
+      }
+  
+      var about = document.getElementById("about");
+      about.style.cursor = "pointer";
+      if (about) {
+        changeColorOnHover(about);
+        about.addEventListener("click", function (e) {
+          window.location.href = "portfolio.html";
+        });
+      }
+
+      var home = document.getElementById("home");
+      home.style.cursor = "pointer";
+      if (home) {
+        changeColorOnHover(home);
+        home.addEventListener("click", function (e) {
+          window.location.href = "home.html";
+        });
+      }
+  
+      var predict = document.getElementById("predict");
+      predict.style.pointer = "pointer";
+      if (predict) {
+        predict.addEventListener("click", function (e) {
+          window.location.href = "orediction.html";
+        });
+      }
+      
+      var detail = document.getElementById("approach");
+      detail.style.pointer = "pointer";
+      if (detail) {
+        detail.addEventListener("click", function (e) {
+          window.location.href = "about.html";
+        });
+      }
+      
+      var predictbtn = document.getElementById("predictbtn");
+      predictbtn.style.cursor = "pointer";
+      if (predictbtn) {
+        changeColorOnHover1(predictbtn);
+        predictbtn.addEventListener("click", function (e) {
+          window.location.href = "portfolio.html";
+        });
+      }
+    </script>
+    <script>
+     function showThankYouPopup(event) {
+        event.preventDefault();
+
+        const popupContainer = document.getElementById("popupcontainer");
+        popupContainer.style.display = "block";
+    }
+
+    
+
+
+
+
+    </script>
+  </body>
+</html>
